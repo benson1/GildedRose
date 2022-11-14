@@ -20,7 +20,23 @@ namespace GildedRose.Tests
             app.UpdateQuality();
 
             Assert.AreEqual(app.Items[0].SellIn, 9);
+            Assert.AreEqual(app.Items[0].Quality,19);
             //test.Should().Be("");
         }
+        [Test]
+        public void WhenRegularItemUpdate_ExpiredSellinQualityDecreasesTwiceAsFast()
+        {
+
+            IList<Item> items = new List<Item>{
+                new Item{Name = "+5 Dexterity Vest",SellIn = 0, Quality = 20}
+            };
+            Program app = new Program() { Items = items };
+            app.UpdateQuality();
+
+            Assert.AreEqual(app.Items[0].SellIn, -1);
+            Assert.AreEqual(app.Items[0].Quality, 18);
+            //test.Should().Be("");
+        }
+
     }
 }
