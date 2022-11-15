@@ -9,34 +9,80 @@ namespace GildedRose.Tests
     [TestFixture]
     public class TestAssemblyTests
     {
+        private Item CreateItemAndUpdate(string Name, int SellIn,int Quality)
+        {
+            IList<Item> items = new List<Item>{
+                new Item{Name = Name,SellIn =SellIn,Quality = Quality}
+            };
+            Program app = new Program() { Items = items };
+            app.UpdateQuality();
+            return items[0];
+
+        }
+
         [Test]
         public void WhenRegularItemUpdate_LowerSellinAndQuality()
         {
-
-            IList<Item> items = new List<Item>{ 
-                new Item{Name = "+5 Dexterity Vest",SellIn = 10,Quality = 20}
-            };
-            Program app = new Program() { Items = items};
-            app.UpdateQuality();
-
-            Assert.AreEqual(app.Items[0].SellIn, 9);
-            Assert.AreEqual(app.Items[0].Quality,19);
-            //test.Should().Be("");
+            Item item = CreateItemAndUpdate("item",10,19 );
+            Assert.AreEqual(9, item.SellIn);
+            Assert.AreEqual(18, item.Quality);
         }
         [Test]
         public void WhenRegularItemUpdate_ExpiredSellinQualityDecreasesTwiceAsFast()
         {
-
-            IList<Item> items = new List<Item>{
-                new Item{Name = "+5 Dexterity Vest",SellIn = 0, Quality = 20}
-            };
-            Program app = new Program() { Items = items };
-            app.UpdateQuality();
-
-            Assert.AreEqual(app.Items[0].SellIn, -1);
-            Assert.AreEqual(app.Items[0].Quality, 18);
-            //test.Should().Be("");
+            Item item = CreateItemAndUpdate("item", 0, 19);
+            Assert.AreEqual(-1, item.SellIn);
+            Assert.AreEqual(17, item.Quality);
+        }
+        [Test]
+        public void WhenRegularItemUpdate_QualityNeverNegative()
+        {
+            Item item = CreateItemAndUpdate("item", 15, 0);
+            Assert.AreEqual(0, item.Quality);
         }
 
+        [Test]
+        public void WhenAgedBreeQualityIncreases()
+        {
+            Item item = CreateItemAndUpdate("Aged Brie", 15, 0);
+            Assert.AreEqual(1, item.Quality);
+        }
+
+        [Test]
+        public void WhenAgedBreeQualityNeverExceeds50()
+        {
+            Item item = CreateItemAndUpdate("Aged Brie", 15, 50);
+            Assert.AreEqual(50, item.Quality);
+        }
+        [Test]
+        public void WhenSulfurasQualityNeverDecreases()
+        {
+            Item item = CreateItemAndUpdate("Sulfuras, Hand of Ragnaros", 15, 40);
+            Assert.AreEqual(40, item.Quality);
+        }
+        [Test]
+        public void WhenBackstagePassQualityIncreases()
+        {
+            Item item = CreateItemAndUpdate("Backstage passes to a TAFKAL80ETC concert", 15, 30);
+            Assert.AreEqual(31, item.Quality);
+        }
+        [Test]
+        public void WhenBackstagePass10DaysRemainQualityIncreasesby2()
+        {
+            Item item = CreateItemAndUpdate("Backstage passes to a TAFKAL80ETC concert", 10, 30);
+            Assert.AreEqual(32, item.Quality);
+        }
+        [Test]
+        public void WhenBackstagePass10DaysRemainQualityIncreasesby3()
+        {
+            Item item = CreateItemAndUpdate("Backstage passes to a TAFKAL80ETC concert", 5, 30);
+            Assert.AreEqual(33, item.Quality);
+        }
+        [Test]
+        public void WhenBackstageExpiredDaysQualityDropsTo0()
+        {
+            Item item = CreateItemAndUpdate("Backstage passes to a TAFKAL80ETC concert", 0, 30);
+            Assert.AreEqual(0, item.Quality);
+        }
     }
 }
