@@ -14,7 +14,7 @@ namespace GildedRose.Tests
             IList<Item> items = new List<Item>{
                 new Item{Name = Name,SellIn =SellIn,Quality = Quality}
             };
-            Program app = new Program() { Items = items };
+            GildedRoseLogic app = new GildedRoseLogic() { Items = items };
             app.UpdateQuality();
             return items[0];
 
@@ -44,21 +44,27 @@ namespace GildedRose.Tests
         [Test]
         public void WhenAgedBreeQualityIncreases()
         {
-            Item item = CreateItemAndUpdate("Aged Brie", 15, 0);
+            Item item = CreateItemAndUpdate(GildedRoseLogic.AGED_BRIE, 15, 0);
             Assert.AreEqual(1, item.Quality);
         }
 
         [Test]
         public void WhenAgedBreeQualityNeverExceeds50()
         {
-            Item item = CreateItemAndUpdate("Aged Brie", 15, 50);
+            Item item = CreateItemAndUpdate(GildedRoseLogic.AGED_BRIE, 15, 50);
             Assert.AreEqual(50, item.Quality);
         }
         [Test]
         public void WhenSulfurasQualityNeverDecreases()
         {
-            Item item = CreateItemAndUpdate("Sulfuras, Hand of Ragnaros", 15, 40);
-            Assert.AreEqual(40, item.Quality);
+            Item item = CreateItemAndUpdate("Sulfuras, Hand of Ragnaros", 15, 80);
+            Assert.AreEqual(80, item.Quality);
+        }
+        [Test]
+        public void WhenSulfurasSellinNeverDecreases()
+        {
+            Item item = CreateItemAndUpdate("Sulfuras, Hand of Ragnaros", 15, 80);
+            Assert.AreEqual(15, item.SellIn);
         }
         [Test]
         public void WhenBackstagePassQualityIncreases()
