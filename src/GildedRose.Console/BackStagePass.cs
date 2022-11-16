@@ -18,7 +18,7 @@ namespace GildedRose.Console
 
         public override void UpdateItem()
         {
-            Sellin =Sellin ;
+            Sellin -=1 ;
             Quality = Sellin > 0 ? QualityCalculate(Quality, Sellin) : 0;
         }
 

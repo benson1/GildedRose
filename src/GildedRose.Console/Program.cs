@@ -9,44 +9,43 @@ namespace GildedRose.Console
         {
             System.Console.WriteLine("OMGHAI!");
 
-            var app = new GildedRoseLogic()
-                          {
-                              Items = new List<Item>
+     
+                             var Items = new List<BaseItem>
                                           {
-                                              new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
-                                              new Item {Name = "Aged Brie", SellIn = 2, Quality = 0},
-                                              new Item {Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7},
-                                              new Item {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
-                                              new Item
+                                              new DexterityVest {Name = "+5 Dexterity Vest", Sellin = 10, Quality = 20},
+                                              new AgedBrie {Name = "Aged Brie", Sellin = 2, Quality = 0},
+                                              new ElixerOfTheMongoose {Name = "Elixir of the Mongoose", Sellin = 5, Quality = 7},
+                                              new Sulfuras {Name = "Sulfuras, Hand of Ragnaros", Sellin = 0, Quality = 80},
+                                              new BackStagePass
                                                   {
                                                       Name = "Backstage passes to a TAFKAL80ETC concert",
-                                                      SellIn = 15,
+                                                      Sellin = 15,
                                                       Quality = 20
                                                   },
-                                              new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
-                                          }
+                                              //new BaseItem {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
+                                          
 
                           };
 
-            for (int i = 0; i < app.Items.Count; i++)
+            for (int i = 0; i < Items.Count; i++)
             {
                 System.Console.WriteLine(
-                    app.Items[i].Name
+                    Items[i].Name
                     + " / quality: "
-                    + app.Items[i].Quality
+                    + Items[i].Quality
                      + " / sell in: "
-                     + app.Items[i].SellIn);
+                     + Items[i].Sellin);
+                Items[i].UpdateItem();
             }
-            app.Items = app.UpdateQuality();
 
-            for (int i = 0; i < app.Items.Count; i++)
+            for (int i = 0; i < Items.Count; i++)
             {
                 System.Console.WriteLine(
-                    app.Items[i].Name
+                    Items[i].Name
                     + " / quality: "
-                    + app.Items[i].Quality
+                    + Items[i].Quality
                      + " / sell in: "
-                     + app.Items[i].SellIn);
+                     + Items[i].Sellin);
             }
             //System.Console.WriteLine(app.items);
             System.Console.ReadKey();
