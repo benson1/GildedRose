@@ -7,9 +7,6 @@ namespace GildedRose.Console
 
         static void Main(string[] args)
         {
-            System.Console.WriteLine("OMGHAI!");
-
-     
                              var Items = new List<BaseItem>
                                           {
                                               new DexterityVest {Name = "+5 Dexterity Vest", Sellin = 10, Quality = 20},
@@ -27,27 +24,27 @@ namespace GildedRose.Console
 
                           };
 
-            for (int i = 0; i < Items.Count; i++)
+            foreach (BaseItem item in Items)
             {
                 System.Console.WriteLine(
-                    Items[i].Name
+                    item.Name
                     + " / quality: "
-                    + Items[i].Quality
+                    + item.Quality
                      + " / sell in: "
-                     + Items[i].Sellin);
-                Items[i].UpdateItem();
+                     + item.Sellin);
+                item.UpdateItem();
             }
 
-            for (int i = 0; i < Items.Count; i++)
+            foreach (BaseItem item in Items)
             {
                 System.Console.WriteLine(
-                    Items[i].Name
+                    item.Name
                     + " / quality: "
-                    + Items[i].Quality
+                    + item.Quality
                      + " / sell in: "
-                     + Items[i].Sellin);
+                     + item.Sellin);
+                item.UpdateItem();
             }
-            //System.Console.WriteLine(app.items);
             System.Console.ReadKey();
 
         }
